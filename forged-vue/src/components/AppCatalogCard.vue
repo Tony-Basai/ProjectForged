@@ -3,7 +3,14 @@
         <img class="catalog__card__img" :src=" props.image " :alt=" props.name ">
         <div class="catalog__card__items">
             <h3 class="catalog__card__items__name">{{ props.name }}</h3>
-            <p class="catalog__card__items__description">{{ props.description }}</p>
+            <div>
+                <img src="../assets/clockIcon.svg" :alt="props.name">
+                <p>{{ props.clock }}д. на изготовление после оформления заказа</p>
+            </div>
+            <div>
+                <img src="../assets/deliveryIcon.svg" :alt="props.name">
+                <p>Доставака по РБ</p>
+            </div>
         </div>
         <div class="catalog__card__items__order">
             <p class="catalog__card__items__order__price">{{ props.price }} <span class="span-price">руб.</span></p>
@@ -11,9 +18,9 @@
                 <button class="catalog__card__items__order__buttons__product-button" :class="{ 'in-store': cardsStore.isCardInCart(props.id) }">
                     {{ cardsStore.isCardInCart(props.id) ? "В корзине" : "Заказать" }}
                 </button>
-                <button @click.prevent="cardsStore.addFavourite(props.id)" class="catalog__card__items__order__buttons__favourite-button">
-                    <svg class="catalog__card__items__order__buttons__favourite-button__favourite-img" width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="catalog__card__items__order__buttons__favourite-button__favourite-img__hover-red" :class="{'favoutire': cardsFavourite.isColorCard(props.id)}" fill-rule="evenodd" clip-rule="evenodd" d="M11.6577 1.75827C12.783 0.632497 14.3095 0 15.9013 0C17.493 0 19.0195 0.632466 20.1448 1.75819C21.2705 2.88347 21.9031 4.41012 21.9031 6.00183C21.9031 7.59357 21.2706 9.12009 20.1448 10.2454C20.1448 10.2454 20.1449 10.2454 20.1448 10.2454L11.3048 19.0854C11.1096 19.2806 10.793 19.2806 10.5977 19.0854L1.75774 10.2454C-0.585912 7.90173 -0.585912 4.10192 1.75774 1.75827C4.10139 -0.585378 7.90119 -0.585378 10.2448 1.75827L10.9513 2.46472L11.6577 1.75827C11.6578 1.75824 11.6577 1.7583 11.6577 1.75827ZM15.9013 1C14.5748 1 13.3027 1.52711 12.3649 2.4653L11.3048 3.52538C11.2111 3.61915 11.0839 3.67183 10.9513 3.67183C10.8187 3.67183 10.6915 3.61915 10.5977 3.52538L9.53774 2.46538C7.58461 0.512254 4.41797 0.512254 2.46484 2.46538C0.511719 4.4185 0.511719 7.58515 2.46484 9.53827L10.9513 18.0247L19.4377 9.53827C20.3759 8.60052 20.9031 7.32831 20.9031 6.00183C20.9031 4.67534 20.376 3.40321 19.4378 2.46546C18.5001 1.52727 17.2278 1 15.9013 1Z" fill="#ffb833"/>
+                <button @click.stop.prevent="cardsFavourite.addFavourite(props.id)" class="catalog__card__items__order__buttons__favourite-button">
+                    <svg class="catalog__card__items__order__buttons__favourite-button__favourite-img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="catalog__card__items__order__buttons__favourite-button__favourite-img__hover-red" :class="{'favourite': cardsFavourite.isColorCard(props.id)}" d="M17.3653 1C15.1604 1 13.2067 2.07706 12 3.73408C10.7933 2.07706 8.84098 1 6.63474 1C2.9706 1 0 3.9706 0 7.63474C0 13.2098 12 22.2004 12 22.2004C12 22.2004 24 13.2098 24 7.63474C24 3.9706 21.0294 1 17.3653 1Z" fill="#ffb833"/>
                     </svg>
                 </button>
             </RouterLink>
@@ -27,7 +34,6 @@ import { useCardsStore } from '@/stores/useCardsStore';
 import { cardsToCart } from '@/stores/cardsToCart';
 
 const cardsStore = cardsToCart();
-
 const cardsFavourite = useCardsStore();
 
 const props = defineProps({
@@ -35,13 +41,10 @@ const props = defineProps({
     image: String,
     name: String,
     category: String,
+    clock: String,
     description: String,
     price: Number
 })
-
-// const products = defineProps [{
-//     id: Number
-// }]
 </script>
 
 <style scoped lang="scss">
@@ -144,7 +147,7 @@ const props = defineProps({
     }
 }
 
-.favoutire{
+.favourite{
     fill: #ff472b;
 }
 </style>

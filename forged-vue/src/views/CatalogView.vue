@@ -11,18 +11,30 @@
             \ Каталог
           </h3>
         </div>
-        <form class="catalog__container__items__form" @submit.prevent>
-          <div class="catalog__container__items__form__serch-items">
-            <input v-model="searchQuery" @keyup.enter="applySearch" class="catalog__container__items__form__serch-items__input-text" type="text" id="query" name="query" placeholder="Введите название изделия">
-            <button class="catalog__container__items__form__serch-items__input-button" @click="applySearch">
-              <img class="catalog__container__items__form__serch-items__input-button__serch-icon" src="../assets/searchIcon.svg" alt="">
-            </button>
+        <div class="catalog__container__items__box-serch">
+          <div class="catalog__container__items__box-serch__dropdown" @click="toggleDropdown">
+            <div class="catalog__container__items__box-serch__dropdown__selected">
+              {{ selectedCategoryName }}
+              <span class="catalog__container__items__box-serch__dropdown__selected__arrow" :class="{ 'open': dropdownOpen }"></span>
+            </div>
+            <ul v-if="dropdownOpen" class="catalog__container__items__box-serch__dropdown__list">
+              <li class="catalog__container__items__box-serch__dropdown__list__button-catecory" v-for="category in categories" 
+                :key="category.key"
+                @click.stop="selectCategory(category)"
+                :class="{ active: selectedCategory === category.key }"
+              >
+                {{ category.name }}
+              </li>
+            </ul>
           </div>
-        </form>
-        <div class="catalog__container__items__category">
-          <button v-for="category in categories" :key="category.key" @click="filterByCategory(category.key)" class="catalog__container__items__category__button" :class="{ active: selectedCategory === category.key }">
-            {{ category.name }}
-          </button>
+          <form class="catalog__container__items__box-serch__form" @submit.prevent>
+            <div class="catalog__container__items__box-serch__form__serch-items">
+              <input v-model="searchQuery" @keyup.enter="applySearch" class="catalog__container__items__box-serch__form__serch-items__input-text" type="text" id="query" name="query" placeholder="Введите название изделия">
+              <button class="catalog__container__items__box-serch__form__serch-items__input-button" @click="applySearch">
+                <img class="catalog__container__items__box-serch__form__serch-items__input-button__serch-icon" src="../assets/searchIcon.svg" alt="">
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -33,16 +45,16 @@
           :id="product.id"
           :image="product.image"
           :name="product.name"
-          :description="product.description"
+          :clock="product.clock"
           :price="product.price"
         />
       </div>
 
-      <transition name="fade">
+      <div class="catalog__container__empty">
         <template v-if="showEmpty">
           <h3>По вашему запросу ничего не найдено..</h3>
         </template>
-      </transition>
+      </div>
 
     </div>
   </section>
@@ -103,6 +115,7 @@ const products = ref([
     image: Signboard,
     name: "Кованая вывеска",
     category: "Вывеска",
+    clock: 7,
     description: "Кованые вывески могут иметь различные формы и размеры. Они могут быть односторонними или двусторонними, устанавливаться на стену здания или на отдельную опору",
     price: 250
   },
@@ -111,6 +124,7 @@ const products = ref([
     image: GatesImg,
     name: "Кованые ворота",
     category: "Ворота",
+    clock: 30,
     description: "Изготовим ворота на заказ. У нас возможно купить ворота любой формы, габаритов и стиля. На нашем производстве большие цеха и свои дизайнеры и кузнецы",
     price: 950
   },
@@ -119,6 +133,7 @@ const products = ref([
     image: BenchImg,
     name: "Кованая скамейка",
     category: "Скамейка",
+    clock: 14,
     description: "Кованые скамейки и лавочки с деревянным или металлическим сиденьем для сада на заказ по индивидуальному дизайну. Изготавливаем в ваших размерах",
     price: 500
   },
@@ -127,6 +142,7 @@ const products = ref([
     image: BarbecuesImg,
     name: "Кованый мангал",
     category: "Мангал",
+    clock: 10,
     description: "Кованые мангалы на заказ производим из высокопрочной стали А3, толщиной 3-4 мм, что позволяет избежать деформации и прогорания изделия. Надёжность, высокая прочность.Уникальный кованый дизайн – даже серийные изделия отличаются",
     price: 300
   },
@@ -135,6 +151,7 @@ const products = ref([
     image: TablesImg,
     name: "Кованый стол",
     category: "Стол",
+    clock: 14,
     description: "Прочное, долговечное и уникальное изделие ручной работы, идеально подходящее для вашего интерьера. Его можно изготовить в любой форме (круглой, прямоугольной, овальной) и с различными вариантами столешниц (дерево, стекло, камень, металл). Такие столы подходят для дома, дачи, кафе или ресторана",
     price: 650
   },
@@ -143,6 +160,7 @@ const products = ref([
     image: RailingsImg,
     name: "Кованые перила",
     category: "Перила",
+    clock: 60,
     description: "Перила, изготовленные способом горячей ковки, – прочные, надежные, долговечные металлоконструкции с эксклюзивной эстетикой",
     price: 1200
   },
@@ -151,6 +169,7 @@ const products = ref([
     image: BedImg,
     name: "Кованая кровать",
     category: "Кровать",
+    clock: 30,
     description: "Эксклюзивная мебель ручной работы или по индивидуальному эскизу, отличающаяся высокой долговечностью, оригинальным дизайном и прочностью. Её изготавливают с учётом точных размеров спального места, выбранного дизайна (узоров, спинки), а также требований к материалам и отделке, что обеспечивает комфорт, безопасность и эстетическое соответствие интерьеру",
     price: 1000
   },
@@ -185,6 +204,27 @@ function filterByCategory(category) {
     searchQuery.value = '';
     appliedSearsh.value = '';
 }
+
+const dropdownOpen = ref(false);
+
+function toggleDropdown() {
+  dropdownOpen.value = !dropdownOpen.value;
+}
+
+function selectCategory(cat) {
+  filterByCategory(cat.key);
+  dropdownOpen.value = false;
+}
+
+const selectedCategoryName = computed(() => {
+  const c = categories.find(c => c.key === selectedCategory.value);
+  return c ? c.name : 'Все категории';
+});
+
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('.catalog__container__items__box-serch__dropdown');
+  if (!target) dropdownOpen.value = false;
+});
 
 const showEmpty = ref(false);
 let emptyTimer = null;
@@ -251,38 +291,105 @@ watch(filteredProducts, (newList) =>{
         }
       }
 
-      &__form{
-        max-width: 30rem;
+      &__box-serch{
+        max-width: 50rem;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
-        &__serch-items{
-          display: flex;
-          align-items: center;
+        &__dropdown{
           position: relative;
-
-          &__input-text{
-            width: 100%;
-            padding: 1rem;
-            border-radius: 2rem;
-            border: none;
-            position: relative;
-            outline: none;
-            -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
-            box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+          width: 10rem;
+          user-select: none;
+          cursor: pointer;
+          font-weight: bold;
+  
+          &__selected {
+            padding: 0.8rem;
+            background-color: #ffb833;
+            border-radius: 1rem;
+            color: #fff;
+            box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+  
+            &__arrow {
+              width: 0;
+              height: 0;
+              border-left: .4rem solid transparent;
+              border-right: .4rem solid transparent;
+              border-top: .5rem solid #fff;
+              transition: 0.2s;
+              
+              &.open {
+                transform: rotate(180deg);
+              }
+            }
           }
-
-          &__input-button{
-            padding: 0.4rem 0.5rem;
-            border-radius: 2rem;
-            border: none;
-            background-color: hsl(0, 0%, 94%);
+  
+          &__list{
             position: absolute;
-            right: 0.3rem;
-            cursor: pointer;
+            top: calc(100% + .3rem);
+            width: 100%;
+            background: #fff;
+            color: #6e6e6e;
+            border-radius: 1rem;
+            box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.2);
+            overflow: hidden;
+            z-index: 20;
+  
+            &__button-catecory {
+              padding: 0.8rem;
+              cursor: pointer;
+  
+              &:hover {
+                background: #ffb833;
+                color: #fff;
+              }
+  
+              &.active {
+                background: #ff472b !important;
+                color: #fff;
+              }
+            }
+          }
+        }
 
-            &__serch-icon{
-              width: 1.5rem;
+        &__form{
+          max-width: 30rem;
+          width: 100%;
+  
+          &__serch-items{
+            display: flex;
+            align-items: center;
+            position: relative;
+  
+            &__input-text{
+              width: 100%;
+              padding: 1rem;
+              border-radius: 2rem;
+              border: none;
+              position: relative;
+              outline: none;
+              -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+              -moz-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+              box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+            }
+  
+            &__input-button{
+              padding: 0.4rem 0.5rem;
+              border-radius: 2rem;
+              border: none;
+              background-color: hsl(0, 0%, 94%);
+              position: absolute;
+              right: 0.3rem;
+              cursor: pointer;
+  
+              &__serch-icon{
+                width: 1.5rem;
+              }
             }
           }
         }
@@ -335,5 +442,15 @@ watch(filteredProducts, (newList) =>{
       padding: 3rem 3rem;
     }
   }
+}
+
+.catalog__container__empty{
+  height: 20rem;
+  font-size: 1.5rem;
+  color: #6e6e6e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:0 3rem 6rem;
 }
 </style>
