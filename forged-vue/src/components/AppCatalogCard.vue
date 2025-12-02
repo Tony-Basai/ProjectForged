@@ -3,13 +3,13 @@
         <img class="catalog__card__img" :src=" props.image " :alt=" props.name ">
         <div class="catalog__card__items">
             <h3 class="catalog__card__items__name">{{ props.name }}</h3>
-            <div>
-                <img src="../assets/clockIcon.svg" :alt="props.name">
-                <p>{{ props.clock }}д. на изготовление после оформления заказа</p>
+            <div class="catalog__card__items__info">
+                <img class="catalog__card__items__info__img" src="../assets/clockIcon.svg" :alt="props.name">
+                <p class="catalog__card__items__info__text">Срок изготовления — {{ props.clock }} дней после оформления заказа.</p>
             </div>
-            <div>
-                <img src="../assets/deliveryIcon.svg" :alt="props.name">
-                <p>Доставака по РБ</p>
+            <div class="catalog__card__items__info">
+                <img class="catalog__card__items__info__img" src="../assets/deliveryIcon.svg" :alt="props.name">
+                <p class="catalog__card__items__info__text">Доставка по всей РБ. Стоимость определяется при оформлении заказа.</p>
             </div>
         </div>
         <div class="catalog__card__items__order">
@@ -78,7 +78,7 @@ const props = defineProps({
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        padding: 0 2rem 1.2rem;
+        padding: 0 2rem;
 
         &__name{
             font-family: "Kelly Slab", sans-serif;
@@ -87,10 +87,20 @@ const props = defineProps({
             font-weight: bold;
         }
 
+        &__info{
+            display: flex;
+            gap: 0.5rem;
+
+            &__img{
+                max-width: 2rem;
+                width: 100%;
+            }
+        }
+
         &__order{
             display: flex;
             gap: 1.5rem;
-            padding: 0 2rem;
+            padding: 0 2rem 2rem;
 
             &__price{
                 font-family: "Kelly Slab", sans-serif;
@@ -110,7 +120,7 @@ const props = defineProps({
                 text-decoration: none;
                 
                 &__product-button{
-                    padding: 0.05rem 0.2rem;
+                    padding: 0.05rem 0.4rem;
                     background-color: #ff472b;
                     color: #fff;
                     font-weight: bold;

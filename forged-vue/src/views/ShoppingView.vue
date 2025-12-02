@@ -30,7 +30,14 @@
                                     <button @click="increment(card)" class="shopping__container__basket__elements__product-card__items__order-info__buttons__button">+</button>
                                 </div>
                                 <p class="shopping__container__basket__elements__product-card__items__order-info__total">{{ card.total }} руб.</p>
-                                <button @click="remove(card.id)" class="shopping__container__basket__elements__product-card__items__order-info__button-deleted">Удалить</button>
+                                <button @click="remove(card.id)" class="shopping__container__basket__elements__product-card__items__order-info__button-deleted">
+                                    <svg class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M2.5 6C2.5 5.72386 2.72386 5.5 3 5.5H21C21.2761 5.5 21.5 5.72386 21.5 6C21.5 6.27614 21.2761 6.5 21 6.5H3C2.72386 6.5 2.5 6.27614 2.5 6Z" fill="#414141"/>
+                                        <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M10 2.5C9.17157 2.5 8.5 3.17157 8.5 4V6C8.5 6.27614 8.27614 6.5 8 6.5C7.72386 6.5 7.5 6.27614 7.5 6V4C7.5 2.61929 8.61929 1.5 10 1.5H14C15.3807 1.5 16.5 2.61929 16.5 4V6C16.5 6.27614 16.2761 6.5 16 6.5C15.7239 6.5 15.5 6.27614 15.5 6V4C15.5 3.17157 14.8284 2.5 14 2.5H10ZM5 5.5C5.27614 5.5 5.5 5.72386 5.5 6V20C5.5 20.8284 6.17157 21.5 7 21.5H17C17.8284 21.5 18.5 20.8284 18.5 20V6C18.5 5.72386 18.7239 5.5 19 5.5C19.2761 5.5 19.5 5.72386 19.5 6V20C19.5 21.3807 18.3807 22.5 17 22.5H7C5.61929 22.5 4.5 21.3807 4.5 20V6C4.5 5.72386 4.72386 5.5 5 5.5Z" fill="#414141"/>
+                                        <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M10 10.5C10.2761 10.5 10.5 10.7239 10.5 11V17C10.5 17.2761 10.2761 17.5 10 17.5C9.72386 17.5 9.5 17.2761 9.5 17V11C9.5 10.7239 9.72386 10.5 10 10.5Z" fill="#414141"/>
+                                        <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M14 10.5C14.2761 10.5 14.5 10.7239 14.5 11V17C14.5 17.2761 14.2761 17.5 14 17.5C13.7239 17.5 13.5 17.2761 13.5 17V11C13.5 10.7239 13.7239 10.5 14 10.5Z" fill="#414141"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -116,7 +123,6 @@ function remove(id){
 
 const shoppingCard = cardsToCart();
 
-// Модальное окно
 const modalOpen = ref(false);
 
 function openModal() {
@@ -129,7 +135,6 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-// ESC закрывает модалку
 function onKey(e) {
   if (e.key === 'Escape') closeModal();
 }
@@ -142,19 +147,16 @@ const orderСonfirmed = ref(false);
 function confirmOrder() {
 
   setTimeout(() => {
-    // закрываем модалку
+
     closeModal();
 
-    // очищаем корзину
     shoppingProduct.cardsCountArr = [];
     shoppingProduct.totalPrice = 0;
     shoppingCard.count = 0;
     localStorage.removeItem('cardsCountArr');
 
-    // показываем уведомление
     orderСonfirmed.value = true;
 
-    // убираем через 3 секунды
     setTimeout(() => {
       orderСonfirmed.value = false;
     }, 3000);
@@ -327,10 +329,19 @@ function confirmOrder() {
                                 color: #000;
                                 font-size: 1.2rem;
                             }
-            
+                            
                             &__button-deleted{
-                                padding: 1rem;
-                                background-color: #ff472b;
+                                width: 2rem;
+                                border: none;
+                                background: none;
+                                cursor: pointer;
+                                
+                                .shopping__container__basket__elements__product-card__items__order-info__button-deleted__img:hover{
+                                
+                                    .shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill{
+                                        fill: #ff472b;
+                                    }
+                                }
                             }
                         }
                     }
@@ -526,6 +537,183 @@ function confirmOrder() {
                     -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
                     -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
                     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767px){
+    .shopping{
+        &__container{
+            &__header{
+                padding: 2rem 3rem;
+            }
+
+            &__basket-empty{
+                &__title{
+                    font-size: 2rem;
+
+                }
+
+                &__description{
+                    font-size: 1.2rem;
+                }
+            }
+
+            &__basket{
+                display: flex;
+                justify-content: center;                
+            }
+        }
+
+        &__modal{
+            
+            &__window {
+
+                &__title {
+                    font-size: 1.5rem;
+                }
+
+                &__items{
+
+                    &__title-input{
+                        font-size: 0.8rem;
+                    }
+                }
+
+                &__product-order{
+                
+                    &__info{
+                        font-size: 1.1rem;
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 735px) {
+    .shopping__container__basket__elements{
+        max-width: 23rem;
+        width: 100%;
+
+        &__product-card{
+            display: flex;
+            justify-content: center;
+
+            &__items{
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .shopping{
+
+        &__container{
+
+            &__header{
+                padding: 2rem 3rem;
+
+                &__title{
+                    font-size: 1.5rem;
+                }
+
+                &__path-section{
+                    font-size: 0.9rem;
+                }
+            }
+
+            &__basket-empty{
+                gap: 1rem;
+
+                &__title{
+                    font-size: 1.5rem;
+
+                }
+
+                &__description{
+                    font-size: 1rem;
+                }
+            }
+
+            &__basket{
+                &__elements{
+                    &__product-card{
+                        gap: 1rem;
+    
+                        &__items{
+                            gap: 1rem;
+        
+                            &__name{
+                                font-size: 1rem;
+                            }
+            
+                            &__order-info{
+                                gap: 2rem;
+        
+                                &__buttons{
+                                    gap: 1.5rem;
+            
+                                    &__button{
+                                        font-size: 1.4rem;
+                                        padding: 0rem 0.4rem;
+                                    }
+
+                                    &__counter{
+                                        font-size: 1rem;
+                                    }
+                                }
+                
+                                &__total{
+                                    font-size: 1rem;
+                                }
+                                
+                                &__button-deleted{
+                                    width: 1.5rem;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &__payment-window{
+                    font-size: 1rem;
+
+                    &__title{
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+        }
+
+        &__order-confirmed {
+            font-size: 1rem;
+        }
+
+        &__modal{            
+            &__window {
+                max-width: 25rem;
+                width: 100%;
+
+                &__title {
+                    font-size: 1.3rem;
+                }
+
+                &__items{
+                    &__title-input{
+                        font-size: 0.8rem;
+                    }
+                }
+
+                &__product-order{
+                    &__info{
+                        font-size: 1rem;
+                    }
+                    
                 }
             }
         }

@@ -50,10 +50,8 @@
         />
       </div>
 
-      <div class="catalog__container__empty">
-        <template v-if="showEmpty">
-          <h3>По вашему запросу ничего не найдено..</h3>
-        </template>
+      <div class="catalog__container__empty" v-if="showEmpty">
+        <h3>По вашему запросу ничего не найдено..</h3>
       </div>
 
     </div>
@@ -200,9 +198,7 @@ const filteredProducts = computed(() =>{
 
 function filterByCategory(category) {
     selectedCategory.value = category
-
-    searchQuery.value = '';
-    appliedSearsh.value = '';
+    applySearch();
 }
 
 const dropdownOpen = ref(false);
@@ -452,5 +448,9 @@ watch(filteredProducts, (newList) =>{
   justify-content: center;
   align-items: center;
   padding:0 3rem 6rem;
+}
+
+@media (max-width: 767px){
+  
 }
 </style>
