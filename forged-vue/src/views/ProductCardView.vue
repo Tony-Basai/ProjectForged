@@ -17,10 +17,16 @@
               <p class="product__container__card__info__items__description">{{ product.description }}</p>
               <div class="product__container__card__info__items__order">
                   <p class="product__container__card__info__items__order__price">{{ product.price }} <span class="span-price">руб.</span></p>
-                  <button @click="toCard" class="product__container__card__info__items__order__button" :class="{ 'delete': cardToCart.isCardInCart(id) }">
-                    {{ cardToCart.isCardInCart(id) ? 'Удалить' : 'Заказать' }}
-                  </button>
-                  <button @click="cardsStore.addFavourite(product.id)" class="product__container__card__info__items__order__button" :class="{'favoutire': cardsStore.isColorCard(product.id)}">Избранные</button>
+                  <div class="product__container__card__info__items__order__buttons">
+                    <button @click="toCard" class="product__container__card__info__items__order__buttons__button" :class="{ 'delete': cardToCart.isCardInCart(id) }">
+                      {{ cardToCart.isCardInCart(id) ? 'Удалить' : 'Заказать' }}
+                    </button>
+                    <button @click="cardsStore.addFavourite(product.id)" class="product__container__card__info__items__order__buttons__favourite">
+                      <svg class="product__container__card__info__items__order__buttons__favourite__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path class="product__container__card__info__items__order__buttons__favourite__img__hover-red" :class="{'favourite': cardsStore.isColorCard(product.id)}" d="M17.3653 1C15.1604 1 13.2067 2.07706 12 3.73408C10.7933 2.07706 8.84098 1 6.63474 1C2.9706 1 0 3.9706 0 7.63474C0 13.2098 12 22.2004 12 22.2004C12 22.2004 24 13.2098 24 7.63474C24 3.9706 21.0294 1 17.3653 1Z" fill="#ffb833"/>
+                      </svg>
+                    </button>
+                  </div>
               </div>
               <div v-if="cardToCart.isCardInCart(id)" class="product__container__card__info__items__buttons">
                 <button @click="decrement()" class="product__container__card__info__items__buttons__button">&minus;</button>
@@ -201,6 +207,7 @@ const products = [
       &__info{
         display: flex;
         justify-content: space-between;
+        gap: 2rem;
         padding: 0 3rem 3rem;
 
         &__img{
@@ -224,8 +231,7 @@ const products = [
   
           &__order{
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             gap: 2rem;
   
             &__price{
@@ -238,27 +244,37 @@ const products = [
               }
             }
             
-            &__button{
-              width: 6rem;
-              padding: 1rem;
-              border-radius: 2rem;
-              background-color: #ffb833;
-              color: #fff;
-              font-weight: bold;
-              border: none;
-              cursor: pointer;
-              -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
-              -moz-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
-              box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+            &__buttons{
+              display: flex;
+              justify-content: space-between;
+              padding-left: 2rem;
+
+              &__button{
+                width: 6rem;
+                padding: 1rem;
+                border-radius: 2rem;
+                background-color: #ffb833;
+                color: #fff;
+                font-weight: bold;
+                border: none;
+                cursor: pointer;
+                -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+                -moz-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+                box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+              }
+
+              &__favourite{
+                border: none;
+                background: none;
+                cursor: pointer;
+              }
             }
           }
   
           &__buttons{
             display: flex;
-            justify-content: center;
             align-items: center;
             gap: 2rem;
-            padding-left: 1.5rem;
   
             &__button{
               border-radius: 2rem;
@@ -291,9 +307,96 @@ const products = [
             }
           }
         }
-
       }
+    }
+  }
+}
 
+@media (max-width: 900px){
+  .product__container__card__info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .product{ 
+    &__container{
+      &__card{
+        gap: 1.5rem;
+
+        &__box-header{
+          padding: 2rem 3rem;
+
+          &__name{
+            font-size: 2rem;
+          }
+
+          &__path-section{
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px){
+  .product{
+    &__container{
+      &__card{
+        gap: 0.5rem;
+
+        &__box-header{
+          gap: 0.5rem;
+
+          &__name{
+            font-size: 1.5rem;
+          }
+        }
+        
+        &__info{
+          gap: 0.5rem;
+          padding: 0 3rem 1rem;
+    
+          &__items{
+            gap: 0.5rem;
+            padding: 0.5rem;
+    
+            &__description{
+              font-size: 0.8rem;
+            }
+    
+            &__order{
+              gap: 0.5rem;
+    
+              &__price{
+                font-size: 1.3rem;
+              }
+              
+              &__buttons{
+                display: flex;
+                justify-content: space-between;
+                padding-left: 1.4rem;
+              }
+            }
+    
+            &__buttons{    
+              &__button{
+                font-size: 1rem;
+                padding: 0.4rem 0.7rem;
+              }
+    
+              &__counter{
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -302,7 +405,14 @@ const products = [
   background-color: #ff472b;
 }
 
-.favoutire{
-  color: green;
+.product__container__card__info__items__order__buttons__favourite__img:hover{
+
+    .product__container__card__info__items__order__buttons__favourite__img__hover-red{
+        fill: #ff5a41;
+    }
+}
+
+.favourite{
+    fill: #ff472b;
 }
 </style>

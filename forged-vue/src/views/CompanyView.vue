@@ -134,4 +134,51 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .about-company{
+    &__container{
+      &__header-box{
+        &__title{
+          font-size: 1.5rem;
+        }
+
+        &__path-section{
+          font-size: 1rem;
+        }
+      }
+
+      &__info{
+        padding: 1rem 2rem;
+
+        &__img{
+          margin-right: 0rem;
+        }
+
+        &__items{
+          &__text{
+            margin-bottom: 1rem;
+            font-size: 1rem;
+
+            &__span-name{
+              font-size: 1.1rem;
+            }
+          }
+
+          &__title-list{
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            margin-top: 0rem;
+          }
+
+          &__list-box{
+            gap: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+    }
+  } 
+}
 </style>
