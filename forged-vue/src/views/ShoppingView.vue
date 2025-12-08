@@ -29,7 +29,8 @@
                                     <p class="shopping__container__basket__elements__product-card__items__order-info__buttons__counter">{{ card.count }}</p>
                                     <button @click="increment(card)" class="shopping__container__basket__elements__product-card__items__order-info__buttons__button">+</button>
                                 </div>
-                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">{{ card.total }} руб.</p>
+                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">× {{ card.price }}</p>
+                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">= {{ card.total }} руб.</p>
                                 <button @click="remove(card.id)" class="shopping__container__basket__elements__product-card__items__order-info__button-deleted">
                                     <svg class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M2.5 6C2.5 5.72386 2.72386 5.5 3 5.5H21C21.2761 5.5 21.5 5.72386 21.5 6C21.5 6.27614 21.2761 6.5 21 6.5H3C2.72386 6.5 2.5 6.27614 2.5 6Z" fill="#414141"/>
@@ -71,11 +72,11 @@
                 </div>
                 <div class="shopping__modal__window__items">
                     <label class="shopping__modal__window__items__title-input" for="phone-number">Введите ваш номер телефона:<span class="input-necessarily">*</span></label>
-                    <input class="shopping__modal__window__items__input" type="tel" id="phone-number" name="phone" placeholder="+375 (__) ___-__-__">
+                    <input class="shopping__modal__window__items__input" v-model="phone" type="tel" id="phone-number" name="phone" placeholder="+375 (__) ___-__-__">
                 </div>
                 <div class="shopping__modal__window__items">
-                    <label class="shopping__modal__window__items__title-input" for="user-email">Введите ваш номер телефона:<span class="input-necessarily">*</span></label>
-                    <input class="shopping__modal__window__items__input" type="email" id="user-email" name="email" placeholder="name@email.com">
+                    <label class="shopping__modal__window__items__title-input" for="user-email">Введите вашу эл.почту:<span class="input-necessarily">*</span></label>
+                    <input class="shopping__modal__window__items__input" v-model="email" type="email" id="user-email" name="email" placeholder="name@email.com">
                 </div>
                 <div class="shopping__modal__window__items">
                     <label class="shopping__modal__window__items__title-input" for="comment">Комментарий к заказу:</label>
@@ -92,17 +93,30 @@
                 <button class="shopping__modal__window__button-order" @click="confirmOrder">
                     Оформить заказ на {{ shoppingProduct.totalPrice }} руб.
                 </button>
+                <p v-if="formError" class="shopping__modal__window__form-error">
+                    {{ formError }}
+                </p>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
 import { cardsToCart } from '../stores/cardsToCart';
 import { RouterLink } from 'vue-router';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const shoppingProduct = cardsToCart();
+
+const shoppingCard = cardsToCart();
+
+const modalOpen = ref(false);
+
+const orderСonfirmed = ref(false);
+
+const phone = ref('');
+const email = ref('');
+const formError = ref('');
 
 function decrement(card){
     if(card.count > 1){
@@ -121,10 +135,6 @@ function remove(id){
     localStorage.setItem('cardsCountArr', JSON.stringify(shoppingProduct.cardsCountArr));
 }
 
-const shoppingCard = cardsToCart();
-
-const modalOpen = ref(false);
-
 function openModal() {
   modalOpen.value = true;
   document.body.style.overflow = 'hidden';
@@ -142,26 +152,48 @@ function onKey(e) {
 onMounted(() => window.addEventListener('keydown', onKey));
 onUnmounted(() => window.removeEventListener('keydown', onKey));
 
-const orderСonfirmed = ref(false);
-
 function confirmOrder() {
+    
+    formError.value = "";
 
-  setTimeout(() => {
+    const phoneRegex = /^\+?\d[\d\(\)\ -]{9,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    closeModal();
+    if (!phone.value.trim()) {
+        formError.value = "Введите номер телефона.";
+        return;
+    }
 
-    shoppingProduct.cardsCountArr = [];
-    shoppingProduct.totalPrice = 0;
-    shoppingCard.count = 0;
-    localStorage.removeItem('cardsCountArr');
+    if (!phoneRegex.test(phone.value.trim())) {
+        formError.value = "Неверный формат номера телефона.";
+        return;
+    }
 
-    orderСonfirmed.value = true;
+    if (!email.value.trim()) {
+        formError.value = "Введите email.";
+        return;
+    }
+
+    if (!emailRegex.test(email.value.trim())) {
+        formError.value = "Неверный формат email.";
+        return;
+    }
 
     setTimeout(() => {
-      orderСonfirmed.value = false;
-    }, 3000);
 
-  }, 2000);
+        closeModal();
+
+        shoppingProduct.cardsCountArr = [];
+        shoppingProduct.totalPrice = 0;
+        shoppingCard.count = 0;
+        localStorage.removeItem('cardsCountArr');
+
+        orderСonfirmed.value = true;
+
+        setTimeout(() => {
+            orderСonfirmed.value = false;
+        }, 3000);
+    }, 2000);
 }
 </script>
 
@@ -538,6 +570,11 @@ function confirmOrder() {
                     -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
                     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
                 }
+            }
+
+            &__form-error{
+                color: red; 
+                text-align: center;
             }
         }
     }
