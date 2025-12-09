@@ -31,22 +31,22 @@ const products = ref([
     {
         id:2,
         image: GatesIcon,
-        name: 'Столы'
+        name: 'Стол'
     },
     {
         id:3,
         image: GatesIcon,
-        name: 'Мангалы'
+        name: 'Мангал'
     },
     {
         id:4,
         image: GatesIcon,
-        name: 'Кровати'
+        name: 'Кровать'
     },
     {
         id:5,
         image: GatesIcon,
-        name: 'Скамейки'
+        name: 'Скамейка'
     },
     {
         id:6,
@@ -56,7 +56,7 @@ const products = ref([
     {
         id:7,
         image: GatesIcon,
-        name: 'Вывески'
+        name: 'Вывеска'
     }
 ])
 </script>

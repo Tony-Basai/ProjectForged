@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" @click="goToCategory">
         <img class="card__img" :src=" props.image " :alt=" props.name ">
         <a class="card__name" href="">
             {{ props.name }}
@@ -8,11 +8,22 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
     id: Number,
     image: String,
     name: String
 })
+
+const router = useRouter();
+
+function goToCategory() {
+    router.push({
+        path: '/catalog',
+        query: { category: props.name }
+    });
+}
 </script>
 
 <style scoped lang="scss">

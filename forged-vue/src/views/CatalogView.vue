@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 import AppCatalogCard from '@/components/AppCatalogCard.vue';
 
@@ -173,9 +173,11 @@ const products = ref([
   },
 ]);
 
+const route = useRoute();
+
 const appliedSearsh = ref('');
 const searchQuery = ref('');
-const selectedCategory = ref('');
+const selectedCategory = ref(route.query.category || '');
 
 function applySearch(){
   appliedSearsh.value = searchQuery.value;
@@ -236,6 +238,15 @@ watch(filteredProducts, (newList) =>{
     showEmpty.value = false
   }
 });
+
+watch(
+  () => route.query.category,
+  (newCategory) => {
+    if (newCategory) {
+      selectedCategory.value = newCategory;
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">
