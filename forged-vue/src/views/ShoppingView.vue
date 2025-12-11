@@ -29,8 +29,7 @@
                                     <p class="shopping__container__basket__elements__product-card__items__order-info__buttons__counter">{{ card.count }}</p>
                                     <button @click="increment(card)" class="shopping__container__basket__elements__product-card__items__order-info__buttons__button">+</button>
                                 </div>
-                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">× {{ card.price }}</p>
-                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">= {{ card.total }} руб.</p>
+                                <p class="shopping__container__basket__elements__product-card__items__order-info__total">× {{ card.price }} = {{ card.total }} руб.</p>
                                 <button @click="remove(card.id)" class="shopping__container__basket__elements__product-card__items__order-info__button-deleted">
                                     <svg class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path class="shopping__container__basket__elements__product-card__items__order-info__button-deleted__img__fill" fill-rule="evenodd" clip-rule="evenodd" d="M2.5 6C2.5 5.72386 2.72386 5.5 3 5.5H21C21.2761 5.5 21.5 5.72386 21.5 6C21.5 6.27614 21.2761 6.5 21 6.5H3C2.72386 6.5 2.5 6.27614 2.5 6Z" fill="#414141"/>
@@ -601,6 +600,17 @@ function confirmOrder() {
             &__basket{
                 display: flex;
                 justify-content: center;                
+                
+                &__elements{
+                    &__product-card{
+                        &__items{
+                            &__order-info{
+                                justify-content: center;
+                                gap: 2rem;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -623,8 +633,7 @@ function confirmOrder() {
                 
                     &__info{
                         font-size: 1.1rem;
-                    }
-                    
+                    }                    
                 }
             }
         }
@@ -690,6 +699,7 @@ function confirmOrder() {
                             }
             
                             &__order-info{
+                                justify-content: center;
                                 gap: 2rem;
         
                                 &__buttons{
