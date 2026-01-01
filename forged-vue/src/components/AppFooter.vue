@@ -19,9 +19,9 @@
                     Мы в социальных сетях
                 </h5>
                 <div class="footer__container__contact-items__box-network">
-                    <a class="footer__container__contact-items__box-network__social-network" href="https://www.instagram.com/"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/InstagramIcon.svg" alt="Forged instagram"></a>
-                    <a class="footer__container__contact-items__box-network__social-network" href="https://www.facebook.com/"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/FacebookIcon.svg" alt="Forged facebook"></a>
-                    <a class="footer__container__contact-items__box-network__social-network" href="x.com"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/TwitterIcon.svg" alt="Forged twitter"></a>
+                    <a class="footer__container__contact-items__box-network__social-network" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/InstagramIcon.svg" alt="Forged instagram"></a>
+                    <a class="footer__container__contact-items__box-network__social-network" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/FacebookIcon.svg" alt="Forged facebook"></a>
+                    <a class="footer__container__contact-items__box-network__social-network" href="https://www.x.com" target="_blank" rel="noopener noreferrer"><img class="footer__container__contact-items__box-network__social-network__img" src="../assets/TwitterIcon.svg" alt="Forged twitter"></a>
                 </div>
             </div>
             <div class="footer__container__copyright">

@@ -103,8 +103,9 @@ const props = defineProps({
 
         &__order{
             display: flex;
-            gap: 1.5rem;
-            padding: 0 2rem 2rem;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 2rem 1.5rem;
 
             &__price{
                 font-family: "Kelly Slab", sans-serif;
@@ -120,7 +121,7 @@ const props = defineProps({
 
             &__buttons{
                 display: flex;
-                gap: 2.5rem;
+                gap: 2.2rem;
                 
                 &__product-button{
                     height: 2rem;

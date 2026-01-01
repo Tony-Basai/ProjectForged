@@ -4,7 +4,9 @@
       <div class="about-company__container__header-box">
         <h2 class="about-company__container__header-box__title">Производство и продажа кованых изделий</h2>
         <h3 class="about-company__container__header-box__path-section">
-          <a class="about-company__container__header-box__path-section__link-home" href="http://localhost:5173/">Главная </a>
+          <RouterLink to="/" class="about-company__container__header-box__path-section__link-home">
+            Главная
+          </RouterLink>
           \ О нас
         </h3>
       </div>
@@ -35,14 +37,58 @@
         </div>
       </div>
       <div class="about-company__container__info__reviews">
-
+        <h3 class="about-company__container__info__reviews__title">Отзывы наши клинтов:</h3>
+        <swiper
+          :modules="[Autoplay, Pagination]"
+          :loop="true"
+          :autoplay="{
+            delay: 6000,
+            disableOnInteraction: false
+          }"
+        :pagination="{clickable: true}"
+        class="about-company__container__info__reviews__swiper"
+        >
+          <swiper-slide v-for="review in reviews" :key="review.id" class="about-company__container__info__reviews__swiper__swiper-slide">
+            <img :src="review.image" class="about-company__container__info__reviews__swiper__swiper-slide__img"/>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination } from 'swiper/modules'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+
+import Review1 from '../assets/review1.png' 
+import Review2 from '../assets/review2.png' 
+import Review3 from '../assets/review3.png' 
+import Review4 from '../assets/review4.png' 
+
+const reviews = ref([
+  {
+    id: 1,
+    image: Review1
+  },
+  {
+    id: 2,
+    image: Review2
+  },
+  {
+    id: 3,
+    image: Review3
+  },
+  {
+    id: 4,
+    image: Review4
+  },
+])
 </script>
 
 <style scoped lang="scss">
@@ -84,7 +130,7 @@
     }
 
     &__info{
-      padding: 2rem 3rem;
+      padding: 2rem 3rem 0rem;
 
       &__img{
         width: 25rem;
@@ -131,6 +177,75 @@
           }
         }
       }
+
+      &__reviews{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding-bottom: 2rem;
+
+        &__title{
+          font-family: "Kelly Slab", sans-serif;
+          color: #000;
+          font-size: 2.5rem;
+        }
+
+        &__swiper{
+          background-color: #fff;
+          max-width: 30rem;
+          width: 100%;
+                
+          .swiper-pagination-bullet {
+            background: #ffb833;
+            opacity: 1;
+          }
+                
+          .swiper-pagination-bullet-active {
+            background: #ff472b;
+          }
+    
+          .swiper-button-next,
+          .swiper-button-prev {
+            color: #ff472b;
+            transition: color 0.3s, transform 0.3s;
+    
+              &:hover {
+                color: #ff5a41;
+                transform: scale(1.1);
+                }    
+              }
+    
+              .why-us__container__swiper__swiper-slide__cards{
+                display: flex;
+                justify-content: center;
+              }
+          
+          &__swiper-slide{
+            &__img{
+              max-width: 30rem;
+              width: 100%;
+            }
+          }
+        }        
+      }
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .about-company__container__info__reviews{
+    &__swiper{
+      background-color: #fff;
+      max-width: 27rem;
+      width: 100%;
+                          
+      &__swiper-slide{
+        &__img{
+          max-width: 27rem;
+          width: 100%;
+        }
+      }
     }
   }
 }
@@ -152,6 +267,8 @@
         padding: 1rem 2rem;
 
         &__img{
+          max-width: 25rem;
+          width: 100%;
           margin-right: 0rem;
         }
 
@@ -177,6 +294,24 @@
             margin-bottom: 0.5rem;
           }
         }
+    
+        &__reviews{
+          &__title{
+            font-size: 1rem;
+          }
+
+          &__swiper{
+            max-width: 20rem;
+            width: 100%;
+                                
+            &__swiper-slide{
+              &__img{
+                max-width: 20rem;
+                width: 100%;
+              }
+            }
+          }
+        }        
       }
     }
   } 

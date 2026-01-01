@@ -6,9 +6,9 @@
                     <RouterLink class="nav__container__contacts__logo" to="/">
                         <img alt="forged logo" class="nav__container__contacts__logo__img" src="@/assets/logo.png" width="125" height="125"/>
                     </RouterLink>
-                    <a class="nav__container__contacts__social-network" href="https://www.instagram.com/"><img class="nav__container__contacts__social-network__img" src="../assets/InstagramIcon.svg" alt="Forged instagram"></a>
-                    <a class="nav__container__contacts__social-network" href="https://www.facebook.com/"><img class="nav__container__contacts__social-network__img" src="../assets/FacebookIcon.svg" alt="Forged facebook"></a>
-                    <a class="nav__container__contacts__social-network" href="x.com"><img class="nav__container__contacts__social-network__img" src="../assets/TwitterIcon.svg" alt="Forged twitter"></a>
+                    <a class="nav__container__contacts__social-network" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><img class="nav__container__contacts__social-network__img" src="../assets/InstagramIcon.svg" alt="Forged instagram"></a>
+                    <a class="nav__container__contacts__social-network" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><img class="nav__container__contacts__social-network__img" src="../assets/FacebookIcon.svg" alt="Forged facebook"></a>
+                    <a class="nav__container__contacts__social-network" href="https://www.x.com" target="_blank" rel="noopener noreferrer"><img class="nav__container__contacts__social-network__img" src="../assets/TwitterIcon.svg" alt="Forged twitter"></a>
                 </div>
                 <h4 class="nav__container__items__name-activity">Кованые изделия</h4>
                 <p class="nav__container__items__schedule">Каждый день <span class="schedule-span">с 10.00 до 18.00</span></p>

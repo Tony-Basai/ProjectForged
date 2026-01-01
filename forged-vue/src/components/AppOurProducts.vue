@@ -21,6 +21,12 @@ import { ref } from 'vue';
 import AppOurProductsCard from './AppOurProductsCard.vue';
 
 import GatesIcon from '../assets/GatesIcon.webp'
+import TableIcon from '../assets/TableIcon.webp'
+import BarbecueIcon from '../assets/BarbecueIcon.webp'
+import BedIcon from '../assets/BedIcon.webp'
+import BenchIcon from '../assets/BenchIcon.webp'
+import RailingsIcon from '../assets/RailingsIcon.webp'
+import SignboardIcon from '../assets/SignboardIcon.webp'
 
 const products = ref([
     {
@@ -30,32 +36,32 @@ const products = ref([
     },
     {
         id:2,
-        image: GatesIcon,
+        image: TableIcon,
         name: 'Стол'
     },
     {
         id:3,
-        image: GatesIcon,
+        image: BarbecueIcon,
         name: 'Мангал'
     },
     {
         id:4,
-        image: GatesIcon,
+        image: BedIcon,
         name: 'Кровать'
     },
     {
         id:5,
-        image: GatesIcon,
+        image: BenchIcon,
         name: 'Скамейка'
     },
     {
         id:6,
-        image: GatesIcon,
+        image: RailingsIcon,
         name: 'Перила'
     },
     {
         id:7,
-        image: GatesIcon,
+        image: SignboardIcon,
         name: 'Вывеска'
     }
 ])
